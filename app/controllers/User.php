@@ -45,23 +45,13 @@ class User extends \app\core\Controller{
 			$this->view('User/register');//TODO: add the new view file
 		}
 	}
-
+	#[\app\filters\Login]
 	public function logout(){
 		session_destroy();
 		header('location:/User/index');
 	}
-
-	#[\app\filters\Login]
+	
 	public function profile(){
-		$message = new \app\models\Message();
-		$messages = $message->getAllForUser($_SESSION['user_id']);
 		$this->view('User/profile',$messages);
 	}
-
-	#[\app\filters\Login]
-	public function somethingSecret(){
-		echo "If you see this, you are logged in";
-	}
-
-
 }

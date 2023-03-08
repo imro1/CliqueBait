@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2023 at 03:56 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Mar 08, 2023 at 05:08 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,61 +26,44 @@ USE `webapplication`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `client`
+-- Table structure for table `follow`
 --
 
-DROP TABLE IF EXISTS `client`;
-CREATE TABLE `client` (
-  `client_id` int(11) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `middle_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `follow`;
+CREATE TABLE `follow` (
+  `follower_id` int(11) NOT NULL,
+  `followed_id` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `message`
+-- Table structure for table `profile`
 --
 
-DROP TABLE IF EXISTS `message`;
-CREATE TABLE `message` (
-  `message_id` int(11) NOT NULL,
-  `sender` int(11) NOT NULL,
-  `receiver` int(11) NOT NULL,
-  `message` text NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `message`
---
-
-INSERT INTO `message` (`message_id`, `sender`, `receiver`, `message`, `timestamp`) VALUES
-(2, 4, 2, 'I love you!', '2023-02-22 14:43:13');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `profile_information`
---
-
-DROP TABLE IF EXISTS `profile_information`;
-CREATE TABLE `profile_information` (
+DROP TABLE IF EXISTS `profile`;
+CREATE TABLE `profile` (
   `user_id` int(11) NOT NULL,
   `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
   `middle_name` varchar(50) NOT NULL,
-  `picture` varchar(1024) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `last_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `profile_information`
+-- Table structure for table `publication`
 --
 
-INSERT INTO `profile_information` (`user_id`, `first_name`, `last_name`, `middle_name`, `picture`) VALUES
-(2, 'Jon', 'C', 'layton', ''),
-(6, 'Mario', 'Bros', '', '6-6408a19c88808.jpg');
+DROP TABLE IF EXISTS `publication`;
+CREATE TABLE `publication` (
+  `publication_id` int(11) NOT NULL,
+  `profile_id` int(11) NOT NULL,
+  `picture` varchar(128) NOT NULL,
+  `caption` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -93,86 +76,82 @@ CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password_hash` varchar(72) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`user_id`, `username`, `password_hash`) VALUES
-(2, 'Tarzan', '$2y$10$xtKLUe1rnNz01IiJjee89OLTZ6Oxd/MxRmX3Y5QPMeOeOx0wxeS12'),
-(4, 'Jane', '$2y$10$kTHPRii7r76Jx8.kwVLfwe4dBhvECsHjxnJMIl5WVfbZm45GbIDh6'),
-(6, 'Tarzan2', '$2y$10$Kacx75A0VOKhvexni3G54OzVu5QBmTj2zD4MnV2hJRrQFZ1kITuHW');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `client`
+-- Indexes for table `follow`
 --
-ALTER TABLE `client`
-  ADD PRIMARY KEY (`client_id`);
+ALTER TABLE `follow`
+  ADD PRIMARY KEY (`follower_id`,`followed_id`);
 
 --
--- Indexes for table `message`
+-- Indexes for table `profile`
 --
-ALTER TABLE `message`
-  ADD PRIMARY KEY (`message_id`),
-  ADD KEY `message_to_sender` (`sender`),
-  ADD KEY `message_to_receiver` (`receiver`);
+ALTER TABLE `profile`
+  ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `profile_information`
+-- Indexes for table `publication`
 --
-ALTER TABLE `profile_information`
-  ADD UNIQUE KEY `user_id` (`user_id`);
+ALTER TABLE `publication`
+  ADD PRIMARY KEY (`publication_id`),
+  ADD KEY `ProfileUserId` (`profile_id`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `name` (`username`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `client`
+-- AUTO_INCREMENT for table `profile`
 --
-ALTER TABLE `client`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `profile`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `message`
+-- AUTO_INCREMENT for table `publication`
 --
-ALTER TABLE `message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `publication`
+  MODIFY `publication_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `message`
+-- Constraints for table `follow`
 --
-ALTER TABLE `message`
-  ADD CONSTRAINT `message_to_receiver` FOREIGN KEY (`receiver`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `message_to_sender` FOREIGN KEY (`sender`) REFERENCES `user` (`user_id`);
+ALTER TABLE `follow`
+  ADD CONSTRAINT `profileFollowed` FOREIGN KEY (`followed_id`) REFERENCES `profile` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `profileFollower` FOREIGN KEY (`follower_id`) REFERENCES `profile` (`user_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `profile_information`
+-- Constraints for table `profile`
 --
-ALTER TABLE `profile_information`
-  ADD CONSTRAINT `profile_to_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+ALTER TABLE `profile`
+  ADD CONSTRAINT `userProfileId` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `publication`
+--
+ALTER TABLE `publication`
+  ADD CONSTRAINT `ProfileUserId` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
