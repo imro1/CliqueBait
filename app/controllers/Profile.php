@@ -100,7 +100,7 @@ class Profile extends \app\core\Controller {
 
             }else{
                 // Save the image in the images folder
-                $path = dirname(__DIR__).DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR;
+                $path = 'images'.DIRECTORY_SEPARATOR;
                 $targetFileName = $user_id.'-'.uniqid().'.'.$fileType;
 
                 move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $path.$targetFileName);
