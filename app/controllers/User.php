@@ -52,6 +52,6 @@ class User extends \app\core\Controller{
 	}
 	
 	public function profile(){
-		$this->view('User/profile',$messages);
+		$this->view('User/profile');
 	}
 }
