@@ -1,6 +1,7 @@
 <?php
 namespace app\core;
 
-interface AccessFilter{
-	public function execute();
+abstract class AccessFilter{
+	abstract public function execute();
 }
+?>

@@ -1,2 +1,3 @@
-# CliqueBait
-Simple Social Media App
+# Instasham
+
+[Live demo](http://instasham.cstutoring.ca)

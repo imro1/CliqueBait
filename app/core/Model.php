@@ -2,17 +2,21 @@
 namespace app\core;
 
 class Model{
-	public $connection;
+	protected static $_connection;
+
 	public function __construct(){
-		$host = 'localhost';
-		$dbname = 'webapplication';
-		$user = 'root';
-		$pass = '';
-		try {
-			$this->connection = new \PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-		}
-		catch(PDOException $e) {
-			echo $e->getMessage();
+		$server = 'localhost';//127.0.0.1
+		$dbname = 'Instasham';
+		$username = 'root';
+		$password = '';
+
+		try{
+			self::$_connection = new \PDO("mysql:host=$server;dbname=$dbname",
+											$username,$password);
+			self::$_connection->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
+		}catch(\Exception $e){
+			echo "Failed connecting to the database";
+			exit(0);
 		}
 	}
 }

@@ -5,7 +5,6 @@ class Publication extends \app\core\Controller{
 
 	#[\app\filters\JustLeave]
 	public function index(){
-		//TODO: find a purpose for this index or place create here
 	}
 
 	#[\app\filters\Login]

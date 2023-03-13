@@ -15,4 +15,5 @@ class Main extends \app\core\Controller{
 		$publications = $publication->search($_GET['search_term']);
 		$this->view('Main/index', $publications);
 	}
+
 }

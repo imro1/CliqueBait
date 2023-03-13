@@ -2,70 +2,66 @@
 namespace app\core;
 
 class App{
+	private $controller = 'Main';
+	private $method = 'index';
 
-	function __construct(){
-		//this is where we want to route the requests to the appropriate classes/methods
-		// we wish to route requests to /controller/method
-		$request = $this->parseUrl($_GET['url'] ?? '');
-//		var_dump($request);
+	public function __construct(){
+		//echo $_GET['url'];
+		//TODO: replace this echo with the routing algorithm
+		//goal: separate the url in parts
 
-		//default controller and method
-		$controller = 'User';
-		$method = 'index';
-		$params = [];
+		$url = self::parseUrl(); //get the url parsed and returned as an array of URL segment
+		
+		//use the first part to determine the controller class to load
 
-		//is the requested controller in our controllers folder?
-		if(file_exists('app/controllers/' . $request[0] . '.php'))
-		{
-			$controller = $request[0];
-			//$controller = new Main();
-			//remove the $request[0] element
-			unset($request[0]);
+		if(isset($url[0])){
+			if(file_exists('app/controllers/' . $url[0] . '.php')){
+				$this->controller = $url[0]; //$this refers to the current object
+			}
+			unset($url[0]);
 		}
-		$controller = 'app\\controllers\\' . $controller;
-		$controller = new $controller;
+		$this->controller = 'app\\controllers\\' . $this->controller; //provide a fully qualified classname
+		$this->controller = new $this->controller;
 
-		if(isset($request[1]) && method_exists($controller, $request[1])){
-			$method = $request[1];
-			//remove the $request[1] element
-			unset($request[1]);
+		//use the second part to determine the method to run
+
+		if(isset($url[1])){
+			if(method_exists($this->controller, $url[1])){
+				$this->method = $url[1];
+			}
+			unset($url[1]);
 		}
 
-		$params = array_values($request);
+		//access filtering
+		//attribute discovery
+		$reflection = new \ReflectionObject($this->controller);
 
-		//This is the right place for access filtering
-		if($this->filter($controller, $method, $params))
-			return;//deny access to the method call
+		$classAttributes = $reflection->getAttributes();
+		$methodAttributes = $reflection->getMethod($this->method)->getAttributes();
 
-		//Call the controller method with parameters
-		call_user_func_array([$controller, $method], $params);
-	}
+		$attributes = array_values(array_merge($classAttributes, $methodAttributes));
 
-	public function filter($controller, $method, $params){
-		//read the class and method attributes
-		//build the reflection object to read the methods, properties, attributes
-		$reflection = new \ReflectionObject($controller);
-		$classAttributes = $reflection->getAttributes(
-			\app\core\AccessFilter::class,
-			\ReflectionAttribute::IS_INSTANCEOF
-		);
-		$methodAttributes = $reflection->getMethod($method)->getAttributes(
-			\app\core\AccessFilter::class,
-			\ReflectionAttribute::IS_INSTANCEOF
-		);
-		$attributes = array_values(array_merge($classAttributes, $methodAttributes));//putting all attributes in one single list
-		//run through all the conditions
+		//running the attribute class methods
 		foreach ($attributes as $attribute) {
-			//for an attribute, get the class instance (object)
-			$filter = $attribute->newInstance();
+			$filter = $attribute->newInstance();//making the object of class, e.g., Login
 			if($filter->execute())
-				return true;
+				return;
 		}
-		return false;
+
+		//...while passing all other parts as arguments
+		//repackage the parameters
+		$params = $url ? array_values($url) : [];
+		call_user_func_array([ $this->controller, $this->method ], $params);
 	}
 
-	function parseUrl($url){
-		return explode('/', trim($url, '/'));
+	public static function parseUrl(){
+		if(isset($_GET['url']))//get url exists
+		{
+			return explode('/', //return parts in an array, separated by /
+				filter_var(	//remove non-URL characters and sequences
+					rtrim($_GET['url'], '/'))
+				,FILTER_SANITIZE_URL);
+		}
 	}
 
 

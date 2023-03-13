@@ -2,7 +2,7 @@
 namespace app\filters;
 
 #[\Attribute]
-class Profile implements \app\core\AccessFilter{
+class Profile extends \app\core\AccessFilter{
 	public function execute(){
 		if(!isset($_SESSION['profile_id'])){
 			header('location:/Profile/create?message=You must now create your profile to access publication/commenting functionality.');
