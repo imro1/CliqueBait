@@ -10,6 +10,7 @@ if(isset($_GET['error'])){
 }
 ?>
 
+<div class='container' style='text-align: center; margin: auto; background-color: darkgrey;'>
 <form action='' method='post'>
 	<div class="form-group">
 		<label class="col-sm-2 col-form-label">Username:<input class='form-control' type="text" name="username" /></label>
@@ -20,5 +21,5 @@ if(isset($_GET['error'])){
 	<input type="submit" name="action" value="Login" class='btn btn-primary' />
 </form>
 <a href='/User/register'>No account? Register.</a>
-
+</div>
 <?php $this->view('shared/footer'); ?>

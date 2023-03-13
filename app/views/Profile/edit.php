@@ -1,5 +1,6 @@
 <?php $this->view('shared/header', 'CliqueBait'); ?>
 
+<div class='container' style='text-align: center; margin: auto; background-color: darkgrey;'>
 <h1><?=$data ?></h1>
 
 <form action='' method="post">
@@ -15,5 +16,6 @@
 	<input type='submit' name='action' value="Modify" class='btn btn-primary' />
 </form>
 <a href='/Profile/' class='btn btn-secondary'>Cancel</a>
+</div>
 
 <?php $this->view('shared/footer'); ?>

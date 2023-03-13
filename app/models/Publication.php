@@ -4,7 +4,7 @@ namespace app\models;
 class Publication extends \app\core\Model{
 	public function getAll(){
 		//get all newest first
-		$SQL = "SELECT * FROM publication ORDER BY date_time DESC";
+		$SQL = "SELECT * FROM publication ORDER BY timestamp DESC";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute();
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Publication');
@@ -13,7 +13,7 @@ class Publication extends \app\core\Model{
 
 	public function search($searchTerm){
 		//get all newest first
-		$SQL = "SELECT * FROM publication WHERE caption LIKE :searchTerm ORDER BY date_time DESC";
+		$SQL = "SELECT * FROM publication WHERE caption LIKE :searchTerm ORDER BY timestamp DESC";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['searchTerm'=>"%$searchTerm%"]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Publication');
@@ -37,11 +37,11 @@ class Publication extends \app\core\Model{
 	}
 
 	public function update(){
-		$SQL = "UPDATE publication SET picture=:picture, caption=:caption, date_time=:date_time WHERE publication_id=:publication_id";
+		$SQL = "UPDATE publication SET picture=:picture, caption=:caption, timestamp=:timestamp WHERE publication_id=:publication_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['picture'=>$this->picture,
 						'caption'=>$this->caption,
-						'date_time'=>$this->date_time,
+						'timestamp'=>$this->timestamp,
 						'publication_id'=>$this->publication_id]);
 	}
 

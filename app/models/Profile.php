@@ -23,13 +23,20 @@ class Profile extends \app\core\Model{
 	}
 
 	public function getPublications(){
-		$SQL = "SELECT * FROM publication WHERE profile_id=:profile_id ORDER BY date_time DESC";
+		$SQL = "SELECT * FROM publication WHERE profile_id=:profile_id ORDER BY  timestamp DESC";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['profile_id'=>$this->profile_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Publication');
 		return $STMT->fetchAll();
 	}
 
+	public function getComments(){
+		$SQL = "SELECT * FROM comment WHERE profile_id=:profile_id ORDER BY  timestamp DESC";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id'=>$this->profile_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Comment');
+		return $STMT->fetchAll();
+	}
 
 	public function insert(){
 		$SQL = "INSERT INTO profile(first_name, middle_name, last_name, user_id) VALUES (:first_name, :middle_name, :last_name, :user_id)";

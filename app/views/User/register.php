@@ -9,7 +9,7 @@ if(isset($_GET['error'])){
 <?php
 }
 ?>
-
+<div class='container' style='text-align: center; margin: auto; background-color: darkgrey;'>
 <form action='' method='post'>
 	<div class="form-group">
 		<label class="col-sm-2 col-form-label">Username:<input class='form-control' type="text" name="username" /></label>

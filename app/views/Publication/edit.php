@@ -1,5 +1,6 @@
 <?php $this->view('shared/header', 'CliqueBait'); ?>
 
+<div class='container' style='text-align: center; margin: auto; background-color: darkgrey;'>
 <h1>Edit Publication Caption</h1>
 <form action='' method='post' enctype='multipart/form-data'>
 	<div class="form-group">
@@ -10,6 +11,7 @@
 	</div>
 	<input type="submit" name="action" value="Publish" class='btn btn-primary' />
 </form>
+</div>
 
 <script>
 	picture.onchange = evt => {

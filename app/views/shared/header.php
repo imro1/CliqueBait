@@ -7,13 +7,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 
-<body style="background-color:lightgrey;">
-	<div class='container' style='text-align: center; margin: 15px 230px; border: 2px solid #160f29; background-color: grey;'">
-		<a href='/Main/index'><img src="/images/logo.png" style="max-width: 200px;" /></a>
+<nav class="navbar navbar-dark bg-dark">
+
+<body style="background-color:darkgrey;">
+	<div class='container' style='text-align: center; margin: auto; background-color: darkgrey;'>
+		<a href='/Main/index'><img src="/images/logo.png" style="max-width: 200px;"/></a>
 		<form action="/Main/search" method="get" style='display:inline-block'>					
 			<div class="input-group">
 			    <input type="search" name='search_term' class="form-control" placeholder="Search Publication"/>
-			  <button type="submit" class="btn btn-primary" value="Search"><i class="bi-search"></i></button>
+			  <button style="color:white;background: black;" type="submit" class="btn btn-primary" value="Search"><i class="bi-search"></i></button>
 			</div>
 				
 		</form>
@@ -21,11 +23,12 @@
 		<?php
 		if(!isset($_SESSION['user_id'])){?>
 	
-			<a href="/User/index"><i style="font-size: 2rem;" class='bi-door-closed' title="Log in"></i></a>
+			<a href="/User/index"><i style="font-size: 2rem; color:black" class='bi-lock-fill' title="Log in"></i></a>
 <?php	}else{ ?>
-			<a href="/User/logout"><i style="font-size: 2rem;" class='bi-door-open' title='Log out'></i></a>
+			<a href="/User/logout"><i style="font-size: 2rem; color:black" class='bi-lock' title='Log out'></i></a>
 <?php	}
 		?>
-		<a href='/Publication/create'><i style="font-size: 2rem;" class='bi-plus-square' title='New publication'></i></a>
-		<a href='/Profile/index'><i style="font-size: 2rem;" class='bi-file-earmark-person' title='My Profile'></i></a>		
+		<a href='/Publication/create'><i style="font-size: 2rem; color:black" class='bi-download' title='New publication'></i></a>
+		<a href='/Profile/index'><i style="font-size: 2rem; color:black;" class='bi-person-square' title='My Profile'></i></a>		
 	</div>
+</nav>

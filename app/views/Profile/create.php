@@ -8,6 +8,7 @@ if(isset($_GET['message'])){
 <?php
 }
 ?>
+<div class='container' style='text-align: center; margin: auto; background-color: darkgrey;'">
 <h1>Create your Profile</h1>
 <p>Provide the information requested in the form below.</p>
 <form action='' method="post">
@@ -22,5 +23,5 @@ if(isset($_GET['message'])){
 	</div>
 	<input type='submit' name='action' value="Create" class='btn btn-primary' />
 </form>
-
+</div>
 <?php $this->view('shared/footer'); ?>
