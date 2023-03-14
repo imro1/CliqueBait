@@ -47,7 +47,7 @@ class Follow extends \app\core\Controller{
 
 	#[\app\filters\Login]
 	#[\app\filters\Profile]
-	public function iFollow($profile_id){
+	public function isFollowed($profile_id){
 		$follow = new \app\models\Follow();
 		$follow->follower_id = $_SESSION['user_id'];
 		$follow->followed_id = $profile_id;

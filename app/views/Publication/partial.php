@@ -1,4 +1,4 @@
-<div class='jumbotron' id='publication<?=$data->publication_id?>' style='text-align: center; margin:auto; background-color: darkgrey;'>
+<div class='jumbotron jumbotron-fluid' id='publication<?=$data->publication_id?>' style='text-align: center; margin:auto; background-color: darkgrey;'>
 	<hr>
 	<?php $profile=$data->getProfile(); ?>
 	<a href="/Publication/details/<?=$data->publication_id?>"><img style="max-width:700px;max-height:700px" src="/images/<?= $data->picture ?>"></a>

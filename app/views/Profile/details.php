@@ -3,7 +3,7 @@
 <h1>Whos 'Profile:</h1>
 <h2><?=$data ?>
 	<?php
-	if($this->iFollow($data->profile_id) && isset($_SESSION['profile_id']) && $_SESSION['profile_id'] != $data->profile_id){
+	if($this->isFollowed($data->profile_id) && isset($_SESSION['profile_id']) && $_SESSION['profile_id'] != $data->profile_id){
 		echo "<a href='/Follow/unfollowUser/$data->profile_id' class='btn btn-primary'>Unfollow</a>";
 	}else if(isset($_SESSION['profile_id']) && $_SESSION['profile_id'] != $data->profile_id){
 		echo "<a href='/Follow/followUser/$data->profile_id' class='btn btn-primary'>Follow</a>";

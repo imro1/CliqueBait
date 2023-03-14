@@ -41,6 +41,7 @@ class Publication extends \app\core\Model{
 						'caption'=>$this->caption,
 						'`timestamp`'=>$this->timestamp,
 						'publication_id'=>$this->publication_id]);
+
 	}
 
 	public function delete(){

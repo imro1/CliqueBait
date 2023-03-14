@@ -52,7 +52,7 @@ class Profile extends \app\core\Controller{
 
 	#[\app\filters\Login]
 	#[\app\filters\Profile]
-	public function iFollow($profile_id){
+	public function isFollowed($profile_id){
 		$follow = new \app\models\Follow();
 		if (isset($_SESSION['user_id'])) {
 			$follow->follower_id = $_SESSION['user_id'];
