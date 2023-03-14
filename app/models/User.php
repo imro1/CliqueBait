@@ -5,33 +5,32 @@ class User extends \app\core\Model{
 
 	public function get($username){
 		$SQL = "SELECT * FROM user WHERE username=:username";
-		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['username'=>$username]);
-		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\User');
-		return $STMT->fetch();
+		$STH = $this->connection->prepare($SQL);
+		$STH->execute(['username'=>$username]);
+		$STH->setFetchMode(\PDO::FETCH_CLASS, 'app\models\User');
+		return $STH->fetch();
 	}
 
 	public function getProfile(){
-		$SQL = "SELECT * FROM profile WHERE user_id=:user_id";
-		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['user_id'=>$this->user_id]);
-		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Profile');
-		return $STMT->fetch();
+		$SQL = "SELECT * FROM profile WHERE profile_id=:profile_id";
+		$STH = $this->connection->prepare($SQL);
+		$STH->execute(['profile_id'=>$this->user_id]);
+		$STH->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Profile');
+		return $STH->fetch();
 	}
 
 	public function insert(){
 		$SQL = "INSERT INTO user(username, password_hash) VALUES (:username, :password_hash)";
-		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['username'=>$this->username,
+		$STH = $this->connection->prepare($SQL);
+		$STH->execute(['username'=>$this->username,
 						'password_hash'=>$this->password_hash]);
-		return self::$_connection->lastInsertId();
+		return $this->connection->lastInsertId();
 	}
 
 	public function updatePassword(){
 		$SQL = "UPDATE user SET password_hash=:password_hash WHERE user_id=:user_id";
-		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['password_hash'=>$this->password_hash,
+		$STH = $this->connection->prepare($SQL);
+		$STH->execute(['password_hash'=>$this->password_hash,
 						'user_id'=>$this->user_id]);
 	}
-
 }

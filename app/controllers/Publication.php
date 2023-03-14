@@ -5,18 +5,18 @@ class Publication extends \app\core\Controller{
 
 	#[\app\filters\JustLeave]
 	public function index(){
+		
 	}
 
 	#[\app\filters\Login]
 	#[\app\filters\Profile]
 	public function create(){
-		//To make publications, as a user, I can upload my picture and create my caption.
 		if(isset($_POST['action'])){
 			//make a new object
 			$publication = new \app\models\Publication();
 			//populate the object
 			$publication->caption = $_POST['caption'];
-			$publication->profile_id = $_SESSION['profile_id'];//FK
+			$publication->profile_id = $_SESSION['user_id'];//FK, might need to change to profile_id
 			$filename = $this->saveFile($_FILES['picture']);
 			if($filename){
 				$publication->picture = $filename;
@@ -25,7 +25,6 @@ class Publication extends \app\core\Controller{
 			}else{
 				header('location:/Publication/create/');
 			}
-			//TODO: back to where I was?
 		}else{
 			$this->view('Publication/create');
 		}
@@ -34,10 +33,9 @@ class Publication extends \app\core\Controller{
 	#[\app\filters\Login]
 	#[\app\filters\Profile]
 	public function edit($publication_id){
-		//To correct publications, as a user, I can edit my caption.
 		$publication = new \app\models\Publication();
 		$publication = $publication->get($publication_id);
-		if(isset($_POST['action']) && $publication->profile_id == $_SESSION['profile_id']){
+		if(isset($_POST['action']) && $publication->profile_id == $_SESSION['user_id']){
 			$publication->caption = $_POST['caption'];
 			$publication->update();
 			header('location:/Profile/index/');
@@ -55,14 +53,12 @@ class Publication extends \app\core\Controller{
 	#[\app\filters\Login]
 	#[\app\filters\Profile]
 	public function delete($publication_id){
-		//To avoid embarrassment, as a user, I can delete my publication.
 		$publication = new \app\models\Publication();
 		$publication = $publication->get($publication_id);
-		if($publication->profile_id == $_SESSION['profile_id']){
+		if($publication->profile_id == $_SESSION['user_id']){
 			unlink("images/$publication->picture");
 			$publication->delete();
 		}
 		header('location:/Profile/index/');
 	}
-
 }

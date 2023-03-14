@@ -29,6 +29,7 @@
 <?php	}
 		?>
 		<a href='/Publication/create'><i style="font-size: 2rem; color:black" class='bi-download' title='New publication'></i></a>
-		<a href='/Profile/index'><i style="font-size: 2rem; color:black;" class='bi-person-square' title='My Profile'></i></a>		
+		<a href='/Profile/index'><i style="font-size: 2rem; color:black;" class='bi-person-square' title='My Profile'></i></a>
+		<a href='/Follow/index'><i style="font-size: 2rem; color:black;" class='bi-check-square' title='Follow'></i></a>
 	</div>
 </nav>

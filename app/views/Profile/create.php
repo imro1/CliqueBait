@@ -8,7 +8,7 @@ if(isset($_GET['message'])){
 <?php
 }
 ?>
-<div class='container' style='text-align: center; margin: auto; background-color: darkgrey;'">
+<div class='container' style='text-align: center; margin: auto; background-color: darkgrey;'>
 <h1>Create your Profile</h1>
 <p>Provide the information requested in the form below.</p>
 <form action='' method="post">

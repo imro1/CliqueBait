@@ -29,17 +29,28 @@ class Follow extends \app\core\Model {
 	}
 
 	public function getPublications($profile_id) {
-		$SQL = 'SELECT publication.* FROM `publication` JOIN `follow` ON `publication`.`profile_id` = `follow`.`followed_id` WHERE `follow`.follower_id=:follower_id';
+		$SQL = 'SELECT publication.* FROM `publication` JOIN `follow` ON `publication`.`profile_id` = `follow`.`followed_id` WHERE `follow`.follower_id=:follower_id ORDER BY `timestamp` DESC';
 		$STH = $this->connection->prepare($SQL);
 		$STH->execute(['follower_id'=>$profile_id]);
+		$STH->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Follow');
 		return $STH->fetchAll();
 	}
 
-	public function search($searchTerm){
-		$SQL = "SELECT * FROM publication WHERE caption LIKE :searchTerm ORDER BY `timestamp` DESC";
+	public function search($searchTerm, $profile_id){
+		$SQL = "SELECT `publication`.* FROM publication JOIN `follow` ON `publication`.`profile_id` = `follow`.`followed_id` WHERE caption LIKE :searchTerm AND `follow`.follower_id=:follower_id ORDER BY `timestamp` DESC";
 		$STH = $this->connection->prepare($SQL);
-		$STH->execute(['searchTerm'=>"%$searchTerm%"]);
+		$STH->execute(['searchTerm'=>"%$searchTerm%",
+						'follower_id'=>$profile_id]);
 		$STH->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Publication');
 		return $STH->fetchAll();
 	}
+
+	public function getProfile(){
+		$SQL = "SELECT * FROM profile WHERE profile_id=:profile_id";
+		$STH = $this->connection->prepare($SQL);
+		$STH->execute(['profile_id'=>$this->profile_id]);
+		$STH->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Profile');
+		return $STH->fetch();
+	}
+
 }

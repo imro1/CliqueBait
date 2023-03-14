@@ -1,6 +1,6 @@
 <?php $this->view('shared/header', 'CliqueBait'); ?>
 
-<div class='container' style='text-align: center; margin: auto; background-color: darkgrey;'>
+<div class='container' style='text-align: center; margin: center; background-color: darkgrey;'>
 <h1><?=$data ?></h1>
 
 <form action='' method="post">
