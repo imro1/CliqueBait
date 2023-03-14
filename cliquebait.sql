@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2023 at 02:26 AM
+-- Generation Time: Mar 14, 2023 at 03:21 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `cliquebait`
 --
+CREATE DATABASE IF NOT EXISTS `cliquebait` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `cliquebait`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `follow`
 --
 
+DROP TABLE IF EXISTS `follow`;
 CREATE TABLE `follow` (
   `follower_id` int(11) NOT NULL,
   `followed_id` int(11) NOT NULL,
@@ -56,6 +59,7 @@ INSERT INTO `follow` (`follower_id`, `followed_id`, `timestamp`) VALUES
 -- Table structure for table `profile`
 --
 
+DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
   `profile_id` int(11) NOT NULL,
   `first_name` varchar(50) NOT NULL,
@@ -83,6 +87,7 @@ INSERT INTO `profile` (`profile_id`, `first_name`, `middle_name`, `last_name`) V
 -- Table structure for table `publication`
 --
 
+DROP TABLE IF EXISTS `publication`;
 CREATE TABLE `publication` (
   `publication_id` int(11) NOT NULL,
   `profile_id` int(11) NOT NULL,
@@ -96,11 +101,11 @@ CREATE TABLE `publication` (
 --
 
 INSERT INTO `publication` (`publication_id`, `profile_id`, `picture`, `caption`, `timestamp`) VALUES
-(27, 9, '640fbc6f351ad.jpg', 'MEME1', '2023-03-14 00:14:39'),
-(28, 10, '640fbc8c0033f.png', 'MEME2', '2023-03-14 00:15:08'),
-(29, 11, '640fbcb02497b.jpg', 'MEME3', '2023-03-14 00:15:44'),
-(30, 12, '640fbcfa60e1a.png', 'MEME4', '2023-03-14 00:16:58'),
-(31, 13, '640fbd8e8c088.jpg', 'MEME5', '2023-03-14 00:19:26');
+(33, 9, '640fd3b2cbd4a.jpg', 'MEME', '2023-03-14 01:53:54'),
+(34, 10, '640fd3c3796f1.png', 'MEME1', '2023-03-14 01:54:11'),
+(35, 11, '640fd3d087452.jpg', 'MEME2', '2023-03-14 01:54:24'),
+(36, 12, '640fd3dcd9571.png', 'MEME3', '2023-03-14 01:54:36'),
+(37, 13, '640fd3f0f3382.jpg', 'MEME4', '2023-03-14 01:54:56');
 
 -- --------------------------------------------------------
 
@@ -108,6 +113,7 @@ INSERT INTO `publication` (`publication_id`, `profile_id`, `picture`, `caption`,
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
@@ -160,7 +166,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `publication`
 --
 ALTER TABLE `publication`
-  MODIFY `publication_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `publication_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `user`

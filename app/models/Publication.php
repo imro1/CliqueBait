@@ -35,13 +35,12 @@ class Publication extends \app\core\Model{
 	}
 
 	public function update(){
-		$SQL = "UPDATE publication SET picture=:picture, caption=:caption, `timestamp`=:`timestamp` WHERE publication_id=:publication_id";
-		$STH = $this->connection->prepare($SQL);
-		$STH->execute(['picture'=>$this->picture,
-						'caption'=>$this->caption,
-						'`timestamp`'=>$this->timestamp,
-						'publication_id'=>$this->publication_id]);
-
+	$SQL = "UPDATE publication SET picture=:picture, caption=:caption, `timestamp`=:timestamp WHERE publication_id=:publication_id";
+	$STH = $this->connection->prepare($SQL);
+	$STH->execute(['picture'=>$this->picture,
+					'caption'=>$this->caption,
+					'timestamp'=>$this->timestamp,
+					'publication_id'=>$this->publication_id]);
 	}
 
 	public function delete(){
